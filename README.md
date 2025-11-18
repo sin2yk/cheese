@@ -10,7 +10,7 @@ Cheese Academy｜News Anatomy — チーズのニュースが世界を救う
 - 個人情報・A11y配慮のLP
 
 ## ③アプリのデプロイURL
-デプロイしている場合はURLを記入（任意）
+https://sin2yk.github.io/cheese/
 
 ## ④アプリのログイン用IDまたはPassword（ある場合）
 - ID: なし
