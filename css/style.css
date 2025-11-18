@@ -1,0 +1,1579 @@
+/* ここから下に記載していく */
+/* =====================================================
+   BASE STYLE（全体のベース設定）
+   HTMLはリセット済みなので、ここからデザインを作る。
+===================================================== */
+
+/* ページ内スクロールをスムースに（ナビクリックで自然に動く）
+デフォルトはautoだけど、ランディングページはsmoothがナイス！ */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 全体の文字・背景・行間など基本設定 */
+body {
+/* 読みやすく統一感ある和文フォント */
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif; 
+/* メインテキストカラー */
+  color: #333;                       
+/* 背景はシンプルに白 */
+  background-color: #fff;             
+/* 行間：日本語は英語より詰まって見えるので少し広め */
+  line-height: 1.7;                   
+/* 日本語の基準フォントサイズ
+Noto Sans JPはx-heightが高めだけど指定どおり */
+  font-size: 16px;                    
+/* わずかに文字間を空けて可読性UP */
+  letter-spacing: 0.02em;             
+}
+
+/* 全要素のbox-sizingをborder-boxに統一（余白計算を直感的に）
+ 「全部コミコミで指定幅にしてね」*/
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 画像が親要素からはみ出さないように（レスポンシブ対応の基本） */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* aタグ全般の挙動 すべてのリンク（<a>タグ）を
+「下線なし・色は控えめ・動きはなめらか」に整える*/
+a {
+  color: #444; /* 本文よりほんの少し濃いグレーで存在感を出す */
+  text-decoration: none;
+  background-image: linear-gradient(transparent 80%, rgba(247,197,60,0.3) 80%);
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 0.3s ease, color 0.3s ease, opacity 0.3s;
+}
+
+a:hover {
+  background-size: 100% 100%; /* hover時に下から色がスッと広がる */
+  color: #222; /* hover時にほんの少しだけ濃くして自然な変化 */
+  opacity: 0.9; /* ふわっと軽く反応 */
+}
+
+/* セクション共通の余白（上下のバランスを統一） 
+60pxは仕様書指定*/
+section {
+  padding: 60px 20px;
+}
+
+/* 各見出し（h2）のデフォルトデザイン */
+/* 英語タイトル（セクション上部の英字）
+ABOUTとNEWだけ黄色指定 */
+.en-title-y {
+  font-size: 24px;
+  text-align: center;
+  color: #ffd61a; /* チーズアカデミーのテーマカラー */
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+/* それ以外の英語タイトルは色指定なし */
+.en-title {
+  font-size: 24px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 30px;
+}
+
+/* 日本語タイトル（セクション下部の説明タイトル） */
+.jp-title {
+  font-size: 18px; /* ＝2rem（h2相当） */
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 60px;
+}
+
+/* コンテナ：中央寄せ＋幅制限。全セクション共通で使える */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* =====================================================
+   HEADER（ロゴ＋ナビゲーション）
+   サイト全体の印象を決定する重要パート
+===================================================== */
+
+:root {
+  --header-h: 136px; /* ここで一度定義しておく */
+}
+
+
+
+/* ヘッダー内の横並びレイアウト */
+header .container,
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ロゴのサイズ感（高さを固定・幅は自動） */
+/* header .logo img,
+header h1 img {
+  height: 70px;
+  width: auto;
+  display: block;
+} */
+
+/* ===============================
+   ナビゲーション
+=============================== */
+nav ul {
+  display: flex;
+  gap: 50px; /* メニュー間隔（デザイン指示通り） */
+  list-style: none;
+}
+
+nav li {
+  list-style: none;
+}
+
+nav a {
+  font-size: 21px;
+  font-weight: normal;
+  color: #333;
+  position: relative;
+  text-decoration: none;
+  transition: color 0.3s, opacity 0.3s;
+}
+
+nav {
+  padding: 50px 20px; /* 指定どおり上下50px */
+}
+
+
+/* hover時の下線アニメーション */
+nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #ffd61a; /* チーズカラー */
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+nav a:hover {
+  color: #ffd61a;  /* hover時に文字もチーズカラーに */
+  opacity: 0.9;
+}
+
+/* ===============================
+   ページ全体との整合
+=============================== */
+
+
+
+/* 小型画面（スマホ）対応の基本調整 */
+@media (max-width: 768px) {
+  header .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    font-size: 18px;
+  }
+}
+
+/* =====================================================
+   HERO SECTION（メインビジュアル）
+===================================================== */
+
+.hero {
+  margin: 0;
+  padding: 0;
+}
+
+/* .hero-figure {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  height: auto;        /* 固定高を廃止し、比率で安定化（後半の #hero .hero-figure と整合） */
+  /* aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
+.hero-figure img {
+  width: 100%;
+  height: 100%; */
+  /* object-fit: cover;          /* 縦横比を維持してトリミング */
+  /* object-position: center;
+  display: block;
+} */ 
+
+/* =======================================
+   Hero Copy（既存部分＋テロップ用の追記）
+   ======================================= */
+/* キャッチコピー全体を画像の上に重ねる */
+/* 既存 */
+
+
+/* タイトル（クリック対象ではなくす。カーソルも外す） */
+.hero-title {
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 1.3;
+  margin: 0;
+  color: #fff;
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
+  /* cursor: pointer;  ←削除（指はviewportだけに出す） */
+}
+
+/* ★可視ゾーン（JSが生成する） */
+/* 可視ゾーン（JSが幅をセット） */
+.marquee-viewport {
+  overflow: hidden;
+  cursor: pointer;       /* クリックはここだけ */
+  margin-inline: auto;
+  width: fit-content;    /* 実幅はJSで oneWidth を入れる */
+}
+
+/* 2本のタイトルを横並びにして、並び全体を動かす */
+.marquee-track {
+  display: inline-flex;
+  gap: var(--marquee-gap, 0);  /* ← 基本 0、必要なら後で変更OK */
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee var(--marquee-duration, 10s) linear infinite;
+  animation-play-state: paused; /* 初期は停止 */
+}
+
+/* 再生中フラグ */
+.hero-copy.is-running .marquee-track {
+  animation-play-state: running;
+}
+
+/* 無限ループ：1本分(+gap)だけ左に送るとシームレス */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(-1 * var(--marquee-shift, 600px))); }
+}
+
+/* 下段リードはそのまま */
+.hero-lead {
+  font-size: 32px;
+  font-weight: normal;
+  line-height: 1.4;
+  margin: 0;
+  color: #fff;
+}
+
+/* ここからABOUT */
+/* ABOUTセクションの本文を中央寄せに */
+/* === ABOUT 縦リズム（PDF準拠） ================== */
+/* heroの下辺 → ABOUTまで 60px */
+#about { padding-top: 60px; }
+
+/* ABOUT → サブ見出しまで 30px */
+#about .en-title-y { margin: 0 0 30px; }
+
+/* サブ見出し → 1段落目まで 60px */
+#about .jp-title { margin: 0 0 60px; }
+
+/* 以降の本文段落のベース（中央寄せ・読みやすさ） */
+#about .container { text-align: center !important; }
+#about .container p { max-width: 800px; margin-left: auto; margin-right: auto; }
+
+/* 1段落目の下 40px */
+#about .jp-title + p { margin-bottom: 40px; }
+
+/* 2段落目の下 40px（※2段落目=上の直後のp） */
+#about .jp-title + p + p { margin-bottom: 40px; }
+
+/* 3段落目の下 40px */
+#about .jp-title + p + p + p { margin-bottom: 40px; }
+
+/* 4段落目の下 80px → about写真の上辺まで */
+#about .jp-title + p + p + p + p { margin-bottom: 80px; }
+
+/* #about の下側に padding-bottom: 60px;
+#course の上側に padding-top: 60px;
+つまり、セクションの境界では60px + 60px = 120pxの余白が発生してる。 
+のでaboutの下側をpaddingを０に */
+#about {
+  padding-bottom: 0;
+}
+
+/* ここからCOURSE */
+
+/* CONTACT日本語説明*/
+.contact-body {
+  font-size: 18px; /* ＝2rem（h2相当） */
+  text-align: center;
+  font-weight: normal;
+  margin-bottom: 70px;
+}
+/* 2行目と3行目の間だけ30px空ける */
+.space-after {
+  margin-top: 30px;
+}
+
+/* 以降の本文段落のベース（中央寄せ・読みやすさ） */
+#course .container { text-align: center !important; }
+#course .container p { max-width: 800px; margin-left: auto; margin-right: auto; }
+
+/* COURSE → 本文まで 30px */
+#course .en-title { margin: 0 0 30px; }
+
+/* 本文の下 60px */
+#course .en-title + p { margin-bottom: 60px; }
+
+ /* <!-- 「COURSE」後半部分は、写真3枚＋テキスト3枚を
+「左右交互＋上下3段構成」で並べる、まさに2列×3行のタイル構造。 --> */
+.course-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;            /* 画像とテキストの間隔 */
+  margin-bottom: 0; /* 各ブロック間の余白（仕様通り） */
+}
+
+.course-block img {
+  width: 480px;         /* 仕様書どおり固定幅 */
+  height: auto;
+  display: block;
+}
+
+.course-block .text {
+  max-width: 480px;
+  text-align: left;
+  line-height: 1.8;
+}
+
+.course-block.reverse {
+  flex-direction: row-reverse; /* 2段目だけ左右反転 */
+}
+
+.course-block h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 40px;
+  line-height: 1.5;
+}
+
+/* NEWSセクションは複雑な設定については別立てにした*/
+/* NEWS: Moreボタン（中央寄せ・上下60px） */
+#news .more {
+  display: flex;
+  justify-content: center;
+  margin: 60px 0;               /* ← 上下60px */
+}
+
+/* 仕様のサイズ（幅300×高60 / 18px） */
+#news .more .btn {
+  width: 300px;
+  height: 60px;
+  font-size: 18px;
+}
+
+
+/* ここからACCESS セクション */
+
+/* ACCESS: 地図エリア */
+.map {
+  max-width: 1060px;  /* 横の上限 */
+  width: 100%;
+  margin: 60px auto 0;  /* 上60px + 中央寄せ */
+}
+
+.map iframe {
+  display: block;
+  width: 100%;
+  height: 240px;       /* 縦固定 */
+  border: 0;
+}
+
+.map-figure {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .95rem;
+  color: #555;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.map-link {
+  font-size: .9rem;
+  color: #007aff;
+  text-decoration: none;
+}
+
+.map-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== ACCESS: 会社情報（Grid） ===== */
+#access .school-info { 
+  margin-top: 30px; 
+  padding-left: 275px;}
+
+#access .school-info dl{
+  display:grid;
+  grid-template-columns: 100px 500px; /* ラベル列 + 本文列 */
+  column-gap: 50px;                 /* 仕様：列間 50px */
+  row-gap: 30px;                    /* 仕様：dt↔dd 30px */
+  margin:0;
+}
+
+#access .school-info dt{
+  grid-column:1;
+  margin:0;
+  font-weight:600;
+}
+
+/* 項目ブロック間の間隔：60px */
+#access .school-info dd{
+  grid-column:2;
+  margin:0;
+}
+
+/* 複数行を等間隔で積む（住所など） */
+#access .school-info .stack{
+  display:flex;
+  flex-direction:row;
+  gap: 0.5em;
+  flex-wrap:wrap;       /* 幅が狭い時は自動折返し */
+  font-style:normal
+}
+
+/* モバイルは1カラム */
+@media (max-width: 640px){
+  #access .school-info dl{ grid-template-columns: 1fr; column-gap:0; row-gap:12px; }
+  #access .school-info dt{ margin-top:24px; }
+  #access .school-info dd{ grid-column:1; }
+}
+
+/* === ACCESS: school-info のSP左寄せ === */
+@media (max-width: 600px){
+  #access .school-info{
+    padding-left: 0;   /* ← スマホでは余白を消して左寄せ */
+    margin-left: 0;    /* 念のため左寄せを明示（autoが残っている場合の保険） */
+  }
+}
+
+/* CONTACT 本文 */
+
+
+/* --- CONTACT: 2カラム基本 --- */
+#contact form { 
+  max-width: 760px;
+  margin: 70px auto 140px;
+}
+/* form と同じ幅で“中の箱”も中央に寄せる */
+#contact fieldset,
+#contact .form-core {           /* ← form-row を包む div.form-core を使ってる場合も吸収 */
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;           /* 縦ガイド線(::before)の基準 */
+}
+
+/* 送信ボタンの行もフォーム幅でセンター */
+#contact .form-actions,
+#contact #submit-btn {          /* id運用のケースも拾う */
+  max-width: 760px;
+  margin: 30px auto 0;
+  text-align: center;
+}
+
+
+#contact .form-row {
+  display: flex;             /* 横並び */
+  align-items: center;
+  gap: 16px;                 /* ラベルと入力の間隔 */
+  margin-bottom: 30px;       /* 段落間 */
+}
+
+#contact .form-row > label,
+#contact .form-row > legend {
+  flex: 0 0 240px;            /* ラベルの幅を固定（約12字分） */
+  text-align: left;
+}
+
+/* ラベル列を左寄せ */
+#contact .form-row label { text-align: left; }
+#contact .school-info dt {
+  justify-self: start;
+  text-align: left;
+}
+
+
+#contact .form-row > *:not(label):not(legend) {
+  flex: 0 0 400px;                  /* ← 仕様：入力列 400px 固定 */
+  max-width: 400px;          /* 広がりすぎ防止（好みで調整） */
+}
+
+/* デバッグ用のグリッド線（確認用、開発中のみ） */
+/* .form-row { */
+  /* outline: 1px dashed rgba(0,0,0,0.5); 見やすい仮のガイド */
+/* } */
+
+/* === CONTACT 基準寸法・線 === */
+:root{
+  --ct-label: 240px;      /* ラベル列 */
+  --ct-gap: 16px;         /* ラベルと入力の間 */
+  --ct-field: 400px;      /* 入力列 */
+  --ct-divider: #bfbfbf;  /* 線色 */
+  --ct-rule: 2px;         /* ★ 線の太さ（仕様要望：太く） */
+  --ct-nudge: 16px;   /* 罫線を“ちょい左”に寄せる量（px） */
+
+}
+
+/* form全体は相対位置のみ（縦線は form-core に移動） */
+#contact form{ position: relative; }
+
+/* ★ 縦線は「お問い合わせ内容」までで止める */
+#contact .form-core{ position: relative; }
+#contact .form-core::before{
+  content:"";
+  position:absolute;
+  top:0; bottom:0;  /* ← form-core の終端＝お問い合わせ内容の下端で止まる */
+  left: calc(var(--ct-label) + var(--ct-gap) - var(--ct-nudge));
+  border-left: var(--ct-rule) solid var(--ct-divider);
+  pointer-events:none;
+}
+
+/* 各行の横線（下）＋距離16px */
+#contact .form-row{
+  padding-bottom: 16px;                          /* 線との距離16px */
+  margin-bottom: 0;
+  border-bottom: var(--ct-rule) solid var(--ct-divider);
+}
+
+/* ★ 最上段の横線（「お名前」の上） */
+#contact .form-core > .form-row:first-child{
+  padding-top: 16px;                              /* 上の線との距離16px */
+  border-top: var(--ct-rule) solid var(--ct-divider);
+}
+
+/* 例外：線を出したくない行に付与（必要なら） */
+#contact .form-row--no-rule{
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* --- CONTACT: 入力の見た目 --- */
+#contact textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #bfbfbf;
+  border-radius: 4px;
+  box-sizing: border-box;
+  min-height: 160px;     /* ← 仕様：160px固定で統一 */
+}
+
+
+/* --- CONTACT: スマホ縦並び --- */
+@media (max-width: 600px) {
+  #contact .form-row {
+    display: block;       /* flexを解除して縦に */
+  }
+  #contact .form-row > label,
+  #contact .form-row > legend {
+    display: block;
+    text-align: left;
+    margin-bottom: 6px;
+  }
+  #contact .form-row > *:not(label):not(legend) {
+    max-width: 100%;
+  }
+}
+
+  /* #contact .form-core::before{ display:none; } /* 縦ルーラーは非表示 */
+  /* #contact .form-row{ padding-left: 0; }       行の左寄せ  */
+
+
+.privacy-consent .privacy-note a {
+  color: var(--c-link, #007aff);
+  text-decoration: none;
+}
+.privacy-consent .privacy-note a:hover {
+  text-decoration: underline;
+} 
+/* 個人情報同意（右列の開始位置に合わせる） */
+#contact .privacy-consent { 
+  grid-column: 1 / -1;          /* 2カラムを跨いで1行化 */
+  display: flex; 
+  /* justify-content: center;  */
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding-left: 0;
+  position: static;              /* 右列合わせを解除 */
+  left: 0;
+  text-align: left;             /* 文言は左揃えのまま */
+}
+
+/* 子要素の余白も念のためリセット（ブラウザ差異対策） */
+#contact .privacy-consent > label,
+#contact .privacy-consent > .privacy-note{
+  margin: 0;
+  padding: 0;
+}
+
+
+.privacy-note {
+  font-size: 13px;
+}
+
+
+/* 送信エリアも右列起点で中央寄せ */
+/* #contact .form-actions { padding-left: 240px; } */
+
+/* ===== CONTACT: 志望動機をSPでは縦並び ===== */
+@media (max-width: 600px){
+  /* grid強制を解除（既存で grid !important を使っているためこちらも !important） */
+  #contact .form-row--motivation{
+    display: block !important;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--ct-divider, #bfbfbf);
+  }
+  #contact .form-row--motivation > label{
+    display: block;
+    margin-bottom: 6px;
+    text-align: left;
+  }
+  #contact .form-row--motivation .checkbox-group{
+    display: grid;
+    row-gap: 16px;        /* SPは少しタイトに */
+    justify-items: start; /* 左揃えキープ */
+  }
+}
+
+/* ===== CONTACT: お問い合わせ内容のテキストエリアを少し狭く ===== */
+/* PC/タブレットでは右カラム(400px)より少し細く見せる。値はお好みで調整OK */
+#contact .form-row--message textarea{
+  width: 360px;          /* ← ここで狭さを調整（例: 340 / 360 / 380） */
+  max-width: 100%;       /* 右カラム幅を超えない保険 */
+}
+@media (max-width: 600px){
+  #contact .form-row--message textarea{
+    width: 100%;         /* SPでは全幅でOK */
+  }
+}
+
+
+/* === FOOTER (共通) === */
+.site-footer {
+  background: #707070;
+  color: #fff;
+}
+.site-footer__inner {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 30px 16px;  /* 上下30px */
+  text-align: center;
+}
+.site-footer a { color: #fff; text-decoration: underline; }
+.site-footer a:hover { opacity: .85; }
+.site-footer small {
+  display: block;
+  font-size: 0.95rem;
+  letter-spacing: .02em;
+}
+
+/* CONTACTの下余白（ボタン→フッター） ※既に form の margin-bottom:140px があるなら不要 */
+#contact form { margin-bottom: 140px; }  /* 念のため再掲 */
+
+
+/* ========== Design tokens (spec) ========== */
+:root{
+  /* Colors */
+  --c-black: #222222;
+  --c-yellow: #ffd61a;
+  --c-gray-bg: #fafafa;
+
+  /* Typography (spec) */
+  --fz-en-title: 24px;   /* 英語見出し */
+  --fz-jp-title: 18px;   /* 日本語見出し */
+  --fz-body: 16px;       /* 本文 */
+  --fz-nav: 21px;        /* ナビ */
+
+  /* Spacing helpers */
+  --gap-30: 30px;
+  --gap-40: 40px;
+  --gap-50: 50px;
+  --gap-60: 60px;
+}
+
+/* ========== Global typography ========== */
+body { color: var(--c-black); font-size: var(--fz-body); }
+.section-title.en { font-size: var(--fz-en-title); }
+.section-title.jp { font-size: var(--fz-jp-title); }
+
+/* ========== Nav ========== */
+.nav a { font-size: var(--fz-nav); }
+html { scroll-behavior: smooth; } /* ナビクリック→該当場所へ */
+
+/* ========== Buttons (幅300px 高さ60px 文字18px＋hover) ========== */
+.btn,
+.button {
+  width: 300px; height: 60px;
+  font-size: 18px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--c-yellow); color: #fff; border: none; border-radius: 4px;
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+  cursor: pointer;
+}
+.btn:hover,
+.button:hover:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  filter: saturate(1.05) brightness(1.02);
+}
+
+
+.news-more, .btn, .form-actions { text-align:center; }
+
+/* 送信エリア */
+.form-actions{
+  display:flex;
+  justify-content:center;   /* 中央配置 */
+  margin-top:30px;          /* 仕様：上30px */
+}
+
+/* 送信ボタン */
+.btn-submit{
+  appearance:none; -webkit-appearance:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  min-width:300px;          /* 視認性の良い幅（必要なら調整） */
+  height:60px;
+  padding:0 24px;
+
+  background:#FFD24C;       /* 仕様の黄色 */
+  color:#fff;
+  border:none;
+  border-radius:4px;
+  box-shadow:0 6px 16px rgba(0,0,0,.12);
+
+  font-size: 18px;
+  font-weight:700;
+  letter-spacing:.1em;
+  cursor:pointer;
+}
+.btn-submit:hover{ filter:brightness(.97); }
+.btn-submit:focus{ outline:2px solid #333; outline-offset:2px; }
+
+/* ========== COURSE（③と④の余白を常に等しく） ========== */
+/* 例：上下余白を変数にして同値に保つ。どうしても無理なら③=120px（spec） */
+.course { --y-gap-top: 60px; --y-gap-bottom: 60px; }
+.course .block-3 { padding-top: var(--y-gap-top); padding-bottom: var(--y-gap-bottom); }
+.course .block-4 { padding-top: var(--y-gap-top); padding-bottom: var(--y-gap-bottom); }
+/* フォールバック（最悪時の③=120px指定） */
+/* .course .block-3 { padding-top: 120px !important; } */
+
+/* ========== Photos（グレー背景） ========== */
+.section--photos { background: var(--c-gray-bg); }
+
+/* ========== Form（寸法指定） ========== */
+/* ラベル列を上揃えにしたい行に付与 */
+.form-row--top { align-items: start; }
+
+.form-label { display: block; line-height: 1.6; }
+
+.checkbox-group {
+  display: grid;
+  justify-items: start;  /* 左端揃え */
+  align-items: start;
+  row-gap: 24px;          /* ← 仕様：縦間隔24px */
+}
+
+.checkbox-group label {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 8px;            /* 仕様：左のチェックと文言の間 8px */
+  margin: 0;
+}
+
+/* ブラウザ標準のチェックボックスでOK。装飾したければここに追記 */
+
+/* タイトルエリア/パーツエリアの横幅（spec: 240px / 400px） */
+.form-row { 
+  display: grid; 
+  grid-template-columns: 240px 400px; gap: 24px 16px; 
+  align-items: center; 
+  /* transform: translateX(40px); 調整値：±で微調整 */
+}
+
+.form-row + .form-row { margin-top: 16px; }
+
+/* .input, input[type="text"], input[type="email"], select, textarea { */
+  /* width: 328px; height: 36px;     幅328 高さ36 */
+  /* border: 1px solid #bfbfbf; border-radius: 4px; padding: 8px 10px; font-size: var(--fz-body); */
+/* } */
+/* 行高や大きめ余白（例：64px）を入れる場合 */
+.form-row--spaced { margin-top: 64px; }
+
+/* セレクト：きっかけ（specの選択肢に合わせる） */
+select[name="referrer"] { width: 328px; height: 36px; }
+
+/* メールアドレス欄の見出しなど共通ラベル */
+.form-row label { font-size: var(--fz-body); }
+
+/* 志望動機の行だけ、Gridで 240px / 400px を強制して揃える */
+#contact .form-row--motivation{
+  display: grid !important;            /* ← flexを上書きしてGridに */
+  grid-template-columns: 240px 400px;  /* ← 仕様の2カラム固定 */
+  column-gap: 16px;                    /* ← ラベルと項目の間 16px */
+  align-items: start;
+}
+
+/* ラベルは1列目、チェック群は2列目に固定 */
+#contact .form-row--motivation > label{ grid-column: 1; margin: 0; text-align: left; }
+#contact .form-row--motivation .checkbox-group{
+  grid-column: 2;
+  width: 400px;            /* 念押しで右カラム幅に固定 */
+  margin: 0; padding: 0;
+  display: grid;
+  justify-items: start;
+  row-gap: 24px;           /* 仕様：縦24px */
+}
+#contact .form-row--motivation .checkbox-group label{
+  margin: 0; padding: 0;
+  display: inline-flex; align-items: center; column-gap: 8px; /* 仕様：8px */
+}
+#contact .form-row--motivation .checkbox-group input[type="checkbox"]{ margin: 0; }
+
+/* PCでだけ “少し細く見せたい” とき */
+@media (min-width: 601px){
+  #contact .form-row--message textarea{
+    width: 360px;   /* 例：360px（右カラム400px内） */
+    max-width: 100%;
+  }
+}
+
+
+
+/* ========== Utilities（数値指定要件の例） ========== */
+.mt-50 { margin-top: 50px; } .mt-60 { margin-top: 60px; } .mt-70 { margin-top: 70px; } .mt-80 { margin-top: 80px; }
+.mb-30 { margin-bottom: 30px; } .mb-40 { margin-bottom: 40px; } .mb-60 { margin-bottom: 60px; } .mb-120 { margin-bottom: 120px; }
+
+
+/* モバイル最適化 */
+@media (max-width: 768px) {
+  /* .hero-figure { aspect-ratio: 4 / 3; }  スマホで背を高くして情報量確保 */
+  .hero-lead   { font-size: 32px; }
+  .hero-title  { font-size: clamp(22px, 6vw, 34px); }
+}
+
+/* ===== NEWS（index 用の最小セット：自作エリア） ===== */
+#news { padding-top: 60px; }
+#news .en-title-y { margin: 0 0 30px; }
+#news .jp-title   { margin: 0 0 60px; }
+
+/* 3→2→1 の素直なレスポンシブグリッド（最新3件用） */
+#news .news-list{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:24px;
+  list-style:none;
+  margin:24px 0 60px;
+  padding:0;
+}
+@media (max-width:960px){ #news .news-list{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:640px){ #news .news-list{ grid-template-columns:1fr; } }
+#news .news-list > li{ list-style:none; margin:0; padding:0; }
+
+/* カード（index の最新3件だけをきれいに見せる） */
+.news-card{
+  display:block;
+  border-radius:16px;
+  overflow:hidden;
+  background:#fff;
+  color:#222;
+  text-decoration:none;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+.news-card .thumb{ aspect-ratio:16/9; overflow:hidden; }
+.news-card .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+.news-card .body{ background:#fff; padding:12px 14px 16px; }
+.news-card time{ display:block; margin:0 0 6px; font-size:12px; line-height:1.2; color:#666; }
+.news-card .title{ margin:0; font-size:16px; line-height:1.4; font-weight:700; color:#222; }
+.news-card .subtitle{ margin:0; font-size:14px; line-height:1.6; color:#333; }
+
+/* メモ：NEWSの拡張（TOC/全件/互換セレクタ等）は css/news-advanced.css へ分離 */
+
+/* TOC（使っていなければ削除可）
+.toc .wrap{ display:flex; flex-wrap:wrap; gap:8px; }
+.toc a{ padding:6px 10px; border-radius:9999px; background:#f2f2f2; color:#333; text-decoration:none; font-size:.9rem; }
+.toc a:hover{ background:#e9e9e9; } */
+
+/* ===== NEWS patch v2025-11-03 (append-only) ===== */
+
+/* （A）index側：カード本文が写真に隠れる問題を強制解除 */
+#news .news-card figure.thumb { margin:0 !important; }
+#news .news-card .thumb,
+#wallboard .news-card .thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;          /* 画像枠を先に出す */
+  background: #eef3f7;
+}
+#news .news-card .thumb img,
+#wallboard .news-card .thumb img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+
+/* （B）本文（date/title）が必ず表示されるように固定 */
+#news .news-card .body,
+#wallboard .news-card .body {
+  display: block !important;
+  padding: 12px 14px 16px;
+  background: #fff;
+}
+#news .news-card time,
+#wallboard .news-card time {
+  display: block; font-size: 12px; color: #666; margin-bottom: 6px;
+}
+#news .news-card .title,
+#wallboard .news-card .title {
+  display: block; margin: 0; line-height: 1.35; font-size: 16px; font-weight: 700;
+}
+
+/* （C）news.html：ULがなくても section#wallboard をグリッド化 */
+#wallboard {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  list-style: none;
+  margin: 24px 0;
+  padding: 0;
+}
+#wallboard > li { list-style: none; margin: 0; padding: 0; }
+
+/* （D）TOCを使う場合の最低限（未使用なら無害） */
+.toc .wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+.toc a { padding: 6px 10px; border-radius: 9999px; background: #f3f4f6; text-decoration: none; }
+
+/* （E）PDFが横幅からはみ出す問題の保険 */
+embed[type$="pdf"],
+object[type$="pdf"],
+iframe.pdf,
+.pdf-viewer {
+  width: 100% !important;
+  max-width: 100%;
+  height: min(90vh, 1200px);
+}
+
+.news-item { scroll-margin-top: 88px; } /* ヘッダーの高さに合わせて調整 */
+
+.toc-list {
+  display:flex; flex-wrap:wrap; gap:8px;
+  list-style:none; margin:0 0 16px; padding:0;
+}
+.toc-list li a {
+  display:inline-block; padding:6px 10px; border-radius:9999px;
+  background:#f3f4f6; color:#374151; text-decoration:none; font-size:.9rem;
+}
+.toc-list li a:hover { background:#e5e7eb; }
+
+/* NEWSデコレーターのキャプションを確実に見せる最低限の指定 */
+.news-card figcaption.meta { display: block; padding: 8px 12px; }
+.news-card .title { font-weight: 700; line-height: 1.35; }
+.news-card .date { font-size: 12px; opacity: .7; display: block; margin-top: 2px; }
+.news-card .subtitle { font-size: 13px; display: block; margin-top: 2px; }
+
+/* NEWSデコレーターのキャプションを確実に見せる最低限の指定 */
+.news-card figcaption.meta { display: block; padding: 8px 12px; }
+.news-card .title { font-weight: 700; line-height: 1.35; }
+.news-card .date { font-size: 12px; opacity: .7; display: block; margin-top: 2px; }
+.news-card .subtitle { font-size: 13px; display: block; margin-top: 2px; }
+
+/* NEWSデコレーターの新キャプション表示 */
+.news-card figcaption.meta { display:block; padding:8px 12px; }
+.news-card .title { font-weight:700; line-height:1.35; }
+.news-card .date { font-size:12px; opacity:.7; display:block; margin-top:2px; }
+.news-card .subtitle { font-size:13px; display:block; margin-top:2px; }
+
+/* 旧要素を強制的に隠す（cap内の .date は除外） */
+.news-card h1,
+.news-card h2,
+.news-card h3,
+.news-card h4,
+.news-card h5,
+.news-card h6,
+.news-card time:not(.date),
+.news-card .card-content,
+.news-card .news__meta,
+.news-card .news__text { display:none !important; }
+
+/* TOC：chip最小体裁 */
+#news-toc { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 16px; }
+#news-toc .chip {
+  display:inline-block; padding:6px 10px; border:1px solid #e5e5e5; border-radius:999px;
+  text-decoration:none; color:#333; font-size:14px; background:#fff;
+}
+
+/* NEWSキャプションの行間調整（decorと併用） */
+.news-card figcaption.meta { padding:10px 12px; }
+.news-card .title { font-weight:700; line-height:1.35; margin:0 0 2px; }
+.news-card .date { font-size:12px; opacity:.7; display:block; margin:0 0 4px; }
+.news-card .subtitle { font-size:13px; line-height:1.5; }
+
+/* TOC chips（既存構造のまま体裁だけ整える） */
+#news-toc { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 16px; }
+#news-toc a, #news-toc button, #news-toc li, #news-toc span {
+  display:inline-block; padding:6px 10px; border:1px solid #e5e5e5; border-radius:999px;
+  text-decoration:none; color:#333; font-size:14px; background:#fff; cursor:pointer;
+}
+
+/* NEWSキャプションの行間微調整（decorの新キャプションを対象） */
+.news-card figcaption.meta { padding:10px 12px; }
+.news-card .title { font-weight:700; line-height:1.35; margin:0 0 2px; }
+.news-card .date { font-size:12px; opacity:.7; display:block; margin:0 0 4px; }
+.news-card .subtitle { font-size:13px; line-height:1.5; }
+
+/* ===== NEWS: TOC ===== */
+#news-toc { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 16px; }
+#news-toc .chip {
+  display:inline-block; padding:6px 10px; border:1px solid #e5e5e5; border-radius:999px;
+  background:#fff; color:#333; font-size:14px; line-height:1; text-decoration:none; cursor:pointer;
+  transition: box-shadow .2s ease, background .2s ease;
+}
+#news-toc .chip:hover { background:#f8f8f8; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+
+/* ===== NEWS: キャプション（decor生成） ===== */
+#news-all a figcaption.meta,
+#news-latest a figcaption.meta { display:block; padding:12px 14px; }
+
+#news-all a .title,    #news-latest a .title    { font-size:16px; font-weight:700; line-height:1.35; margin:0 0 4px; color:#222; }
+#news-all a .date,     #news-latest a .date     { font-size:12px; opacity:.7; display:block; margin:0 0 6px; }
+#news-all a .subtitle, #news-latest a .subtitle { font-size:14px; line-height:1.6; color:#333; }
+
+/* === Global Header (共通) === */
+.site-header{
+  position: sticky; top: 0; z-index: 1000;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+.site-header .header-container{
+  max-width: 1060px; margin: 0 auto; padding: 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+/* ヘッダーのロゴは全ページ同一スケール */
+.site-header .logo{
+  flex: 0 0 auto;          /* ← フレックスで縮ませない */
+  min-width: 0;            /* ← 余計なはみ出し抑止（保険） */
+}
+.site-header .logo img{
+  display: block;
+  height: 80px;
+  width: auto;             /* 縦横比維持 */
+  max-width: none;         /* ← resetの max-width:100% に負けないように */
+  object-fit: contain;     /* 保険 */
+}
+@media (max-width: 640px){
+  .site-header .logo img{ height: 32px; }
+}
+
+/* news / privacy 用：右の戻るリンクに押されてもロゴを縮めない */
+.site-header--simple .header-container{
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.site-header--simple .back-link{
+  white-space: nowrap;     /* 改行でレイアウトが崩れないように */
+  flex: 0 0 auto;          /* こちらも収縮しない */
+}
+
+/* ヘッダーの内側余白も統一（ページ差をなくす） */
+.site-header .header-container{
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 16px;       /* ← 全ページ同じに */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+
+.g-nav{ display:flex; gap: 28px; align-items:center; }
+.g-nav a{
+  font-size: 0.95rem; text-decoration: none; color:#222; padding: 6px 2px;
+}
+.g-nav a[aria-current="page"]{
+  font-weight: 700; border-bottom: 2px solid #222;
+}
+
+/* Simple back link（privacy用：廃止 → 共通headerに統一するので不要なら削除） */
+.back-link{ display:none; }
+
+/* 共通 main コンテナ（privacyでも利用） */
+.container{ max-width: 1060px; margin: 0 auto; padding: 0 16px; }
+.privacy-main h1{
+  font-size: 1.75rem; margin: 48px 0 24px; text-align:left;
+}
+.privacy-section{ margin: 32px 0; }
+.privacy-section h2{ font-size: 1.15rem; margin: 0 0 10px; }
+.privacy-section p{ line-height: 1.9; }
+
+/* 共通ヘッダー（既存） */
+/* .site-header{ position: sticky; top:0; z-index:1000; background:#fff; box-shadow:0 2px 12px rgba(0,0,0,.06); }
+.site-header .header-container{ max-width:1060px; margin:0 auto; padding:16px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.site-header .logo img{ display:block; height:40px; } */
+
+/* 戻るだけ版（news / privacy） */
+.site-header--simple .g-nav{ display:none; }   /* ナビを消す */
+.site-header .back-link{
+  display:inline-block; font-size:.95rem; color:#222; text-decoration:none; padding:6px 8px; border-radius:6px;
+}
+.site-header .back-link:hover{ background:#f4f4f4; }
+
+/* ===== Mobile fallback (≤480px) ===== */
+@media (max-width: 480px) {
+  /* 縦書きは横書きに */
+  .v-rl, .vertical-label, [data-vertical] {
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    transform: none;
+  }
+  /* マルチカラムや巨大white-spaceを無効化 */
+  .multicol { column-count: initial; column-width: auto; }
+  .nowrap-lg { white-space: normal; }
+  /* ヒーローの変形/アニメ停止 */
+  .hero, .marquee-viewport, .marquee-track, .hero-title, .hero-lead {
+    transform: none !important; animation: none !important;
+  }
+  img { max-width: 100%; height: auto; }
+}
+/* ===== COURSE: mobile fallback (≤480px) ===== */
+@media (max-width: 480px) {
+  #course, #course * {
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+  }
+  #course .course-block,
+  #course .course-contents,
+  #course .course-inner,
+  #course .flex, #course .row {
+    display: block;
+    position: static;
+    width: auto;
+    max-width: 100%;
+    margin: 16px 0;
+  }
+  #course img { display: block; max-width: 100%; height: auto; float: none; }
+  #course .text, #course .desc, #course .col { display: block; float: none; width: auto; }
+}
+
+/* ========== Responsive Finisher for index ========== */
+
+/* 基本コンテナ（全ページ共通） */
+.container{ max-width:1060px; margin:0 auto; padding:0 16px; }
+@media (min-width:768px){ .container{ padding:0 24px; }}
+
+/* ヒーロー：画像は全幅、高さは可変、テキストはclampで縮む */
+.hero{ position:relative; overflow:hidden; }
+/* .hero img{ width:100%; height:auto; display:block; } */
+
+.hero .hero-title{
+  font-weight:800;
+  font-size: clamp(22px, 4.5vw, 48px);
+  line-height:1.2; text-shadow:0 2px 18px rgba(0,0,0,.35);
+}
+.hero .hero-lead{
+  margin-top:.5em;
+  font-size: clamp(14px, 2.2vw, 20px);
+  text-shadow:0 1px 12px rgba(0,0,0,.35);
+}
+
+/* セクションの上下余白（流体） */
+.section{ padding-block: clamp(48px, 7vw, 96px); }
+.section h2{ font-size: clamp(18px, 2.6vw, 24px); letter-spacing:.08em; }
+
+/* COURSE：画像タイルをグリッド化 */
+.course-grid{
+  display:grid; gap:24px;
+  grid-template-columns: repeat(1, minmax(0,1fr));
+}
+@media (min-width:768px){
+  .course-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+.course-card figure{ aspect-ratio: 16 / 9; overflow:hidden; border-radius:8px; }
+.course-card img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* NEWS（トップの最新3件プレビュー） */
+.news-grid{
+  display:grid; gap:24px;
+  grid-template-columns: repeat(1, minmax(0,1fr));
+}
+@media (min-width:768px){
+  .news-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (min-width:1024px){
+  .news-grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+.news-card{ border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,.06); padding:12px; background:#fff; }
+.news-card .thumb{ aspect-ratio: 4 / 3; overflow:hidden; border-radius:10px; }
+.news-card img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* ACCESS：地図は全幅可変、キャプションは下に回す */
+#access .map{ width:100%; max-width:1060px; margin:60px auto 0; }
+#access .map iframe{ width:100%; height: clamp(220px, 40vw, 360px); border:0; display:block; }
+#access figcaption{ font-size:.95rem; color:#444; margin-top:.25rem; }
+
+/* CONTACT：600px未満は縦並び＆ガイド線を簡略表示 */
+@media (max-width:600px){
+  #contact .form-row{ display:block; padding-bottom:12px; border-bottom:1px solid var(--ct-divider,#bfbfbf); }
+  #contact .form-row > label{ display:block; margin-bottom:6px; text-align:left; }
+  #contact .form-row > *:not(label):not(legend){ max-width:100%; }
+  /* 縦ガイド線は小画面では非表示 */
+  #contact .form-core::before{ content:none; }
+}
+
+/* ヘッダー：ロゴ80pxは維持、SPは少し小さく */
+.site-header .logo img{ height:80px; width:auto; max-width:none; display:block; }
+@media (max-width:640px){ .site-header .logo img{ height:56px; } }
+
+
+/* ===== CONTACT: お問い合わせ内容の幅だけ狭くする（PC） ===== */
+@media (min-width: 601px){
+  /* 右カラムのカラム幅は 400px を維持 */
+  #contact .form-row--message > *:not(label):not(legend){
+    flex: 0 0 400px;
+    max-width: 400px;
+  }
+  /* テキストエリア自体を 360px に（#contact textarea を確実に上書き） */
+  #contact .form-row--message textarea{
+    width: 360px;        /* ← ここでお好みの幅に調整（例: 340/360/380） */
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px){
+  #contact .form-row--motivation{
+    display: block !important;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--ct-divider, #bfbfbf);
+  }
+  #contact .form-row--motivation > label{
+    display: block;
+    margin-bottom: 6px;
+    text-align: left;
+  }
+  #contact .form-row--motivation .checkbox-group{
+    display: grid;
+    row-gap: 16px;
+    justify-items: start;
+  }
+}
+/* ===== CONTACT: message の横幅をPCだけ 360px に ===== */
+@media (min-width: 601px){
+  /* 右カラムの flex-basis を 360px に上書き（ここが本丸） */
+  #contact .form-row--message > *:not(label):not(legend){
+    flex: 0 0 360px;
+    max-width: 360px;
+  }
+  /* 念のため textarea 自体の width も合わせる */
+  #contact .form-row--message textarea{
+    width: 360px;
+    max-width: 360px;
+  }
+}
+
+/* SPは従来どおり縦並び＆全幅 */
+@media (max-width: 600px){
+  #contact .form-row--message > *:not(label):not(legend){
+    flex: none;
+    max-width: 100%;
+  }
+  #contact .form-row--message textarea{
+    width: 100%;
+    max-width: 100%;
+  }
+}
+/* ===== CONTACT: SPでカラム幅をリセット（400px固定を解除） ===== */
+@media (max-width: 600px){
+  /* 行全体を縦並びに */
+  #contact .form-row{ display:block !important; }
+
+  /* 右カラムの flex-basis(400px) を無効化して全幅可変に */
+  #contact .form-row > *:not(label):not(legend){
+    flex: 1 1 auto !important;   /* ← これが本丸 */
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* message 行も同様に（念のため個別上書き） */
+  #contact .form-row--message > *:not(label):not(legend){
+    flex: 1 1 auto !important;
+    max-width: 100% !important;
+  }
+  #contact .form-row--message textarea{
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* フォーム本体の器も全幅に */
+  #contact .form-core,
+  #contact .privacy-consent,
+  #contact .form-actions{
+    width: 100% !important;
+  }
+}
+
+/* ===== Header: SPでロゴの下にナビを入れ込む（はみ出し防止） ===== */
+@media (max-width: 600px){
+  /* コンテナは縦積み・左寄せ・余白少し */
+  .site-header .header-container{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 16px;   /* ちょいタイトに */
+  }
+
+  /* ulを使っている場合の余白リセット＆折返し */
+  .g-nav, .g-nav ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .g-nav ul{
+    display: flex;
+    flex-wrap: wrap;          /* 折り返して高さを増やす */
+    gap: 8px 12px;
+  }
+  .g-nav li{ list-style: none; }
+  .g-nav a{
+    display: inline-block;
+    padding: 6px 8px;
+    text-decoration: none;
+    color: #222;
+    border-radius: 6px;
+    background: #f7f7f7;      /* タップしやすく視認性UP（不要なら消してOK） */
+  }
+
+  /* a直並び（ul無し）ケースにも対応しておく */
+  .g-nav{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+}
+
+/* ===== Header: SPでナビ背面も白くしてヘッダー内に収める ===== */
+@media (max-width: 600px){
+  .site-header{
+    background: #fff;
+    z-index: 1000;                 /* コンテンツより前に */
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  }
+  .site-header .header-container{
+    flex-direction: column;        /* ロゴの下にナビ */
+    align-items: stretch;          /* 幅いっぱいに */
+    gap: 8px;
+    padding: 12px 16px;
+  }
+
+  /* ulを使う/使わない両ケースに対応して白背景を敷く */
+  .site-header .g-nav{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    background: #fff;              /* ★ 背景を白に */
+    width: 100%;
+    padding: 6px 0 8px;
+  }
+  .site-header .g-nav ul{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin: 0; padding: 0; list-style: none;
+    width: 100%;
+    background: #fff;              /* ★ ulにも保険で白 */
+  }
+  .site-header .g-nav li{ list-style: none; }
+  .site-header .g-nav a{
+    display: inline-block;
+    padding: 6px 8px;
+    color: #222; text-decoration: none;
+    border-radius: 6px;
+    background: #f7f7f7;           /* 触りやすく（不要なら外してOK） */
+  }
+}
+/* ===== Header: SPでナビを“必ず”白背景のヘッダー内に収める ===== */
+@media (max-width: 600px){
+  /* ヘッダーは白・影つき */
+  .site-header{
+    background:#fff;
+    box-shadow:0 2px 12px rgba(0,0,0,.06);
+    z-index:1000;
+  }
+
+  /* 中身は縦積み。幅いっぱいに広げる */
+  .site-header .header-container{
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:8px;
+    padding:12px 16px 0;   /* 下はnavで足す */
+  }
+
+  /* ★ クラス有無に関係なく nav を白くしてヘッダーに取り込む */
+  .site-header nav{
+    background:#fff;       /* 背景を白に */
+    width:100%;
+    padding:6px 16px 10px; /* 下に余白を追加＝ヘッダー白を延長 */
+  }
+
+  /* ul版のナビでも必ず折返し＆余白ゼロ */
+  .site-header nav ul{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 12px;
+    margin:0;
+    padding:0;
+    list-style:none;
+    width:100%;
+    background:#fff;       /* 念のためulにも白 */
+  }
+  .site-header nav li{ list-style:none; }
+
+  /* a直並びにも効く（g-nav無しでもOK） */
+  .site-header .g-nav,
+  .site-header nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 12px;
+  }
+  .site-header .g-nav a,
+  .site-header nav a{
+    display:inline-block;
+    padding:6px 8px;
+    color:#222;
+    text-decoration:none;
+    border-radius:6px;
+    background:#f7f7f7;    /* 触りやすさ（不要なら削除可） */
+  }
+}
+
+/* ===== HEADER: PCでの正しいレイアウトを再宣言 ===== */
+@media (min-width: 601px){
+  .site-header{ background:#fff; box-shadow:0 2px 12px rgba(0,0,0,.06); }
+
+  /* 横一列・中央揃え・適切な余白に戻す */
+  .site-header .header-container{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 16px 24px;
+  }
+
+  /* SPで付けたnavの白背景/余白をPCでは解除 */
+  .site-header nav{ background: transparent; padding: 0; width: auto; }
+  .site-header nav ul{
+    background: transparent;
+    margin: 0; padding: 0;
+    display: flex; flex-wrap: nowrap; gap: 24px;
+  }
+  .site-header .g-nav{ background: transparent; gap: 24px; }
+  .site-header .g-nav a,
+  .site-header nav a{ background: transparent; padding: 6px 2px; }
+}
+
+/* 予防：ページ最上部の謎の余白を無効化 */
+html, body { margin: 0; padding: 0; }
+.site-header { margin: 0; }
+
+/* ===== HERO: 安定版（figure基準 / 画像は高さ100%＋cover） ===== */
+#hero{ position:relative; margin:0 !important; padding:0; }
+
+#hero .hero-figure{
+  position:relative; margin:0; line-height:0;
+  aspect-ratio:21/9; overflow:hidden;
+}
+
+@media (max-width: 1024px){
+  .hero-figure{ aspect-ratio: 16/9; }
+}
+@media (max-width: 640px){
+  .hero-figure{ aspect-ratio: 4/3; }
+}
+
+#hero .hero-figure > img{
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  display:block; width:100%; height:100%;
+  object-fit: cover; object-position: center; z-index:0;
+}
+
+
+
+#hero .hero-title{ font-size: clamp(22px, 4.5vw, 48px); line-height:1.2; margin:0; }
+#hero .hero-lead, #hero .hero-sub{ font-size: clamp(14px, 2.2vw, 20px); margin:.6em 0 0; }
+
+/* === HERO overlay: 配置ロジックを一本化（左右0 + 下寄せ、内側で中央） === */
+#hero { position:relative; margin:0; padding:0; }
+#hero .hero-figure{ position:relative; margin:0; overflow:hidden; }
+#hero .hero-figure > img{ display:block; width:100%; height:100%; }
+
+/* オーバーレイ本体：全幅を取り、内側要素を中央寄せ */
+#hero .hero-copy{
+  position:absolute;
+  /* 全面に広げて “その中身” を中央に配置 */
+  inset: 0;
+  z-index:2;
+  margin:0; padding: clamp(24px, 6vh, 80px) 16px; /* 端当たり防止の余白 */
+  display: flex; flex-direction: column;
+  align-items: center;              /* 横センター（テキストは中央揃え） */
+  justify-content: center;          /* 縦センター（ここが肝） */
+  text-align:center; color:#fff;
+  transform:none;
+}
+
+/* 内側の“中央レーン”を作る：幅制限 + margin:auto */
+#hero .hero-title,
+#hero .hero-lead{
+  max-width: min(92vw, 1060px);
+  margin: 0 auto;
+  text-shadow: 0 2px 18px rgba(0,0,0,.35);
+}
+#hero .hero-title{ font-weight:800; font-size:clamp(22px, 4.5vw, 48px); line-height:1.2; }
+#hero .hero-lead { margin-top:30px;  font-size:clamp(14px, 2.2vw, 32px); }
+
+/* マルキー窓は内側中央に置く（幅はJSが管理） */
+#hero .marquee-viewport{ margin-inline:auto; width:fit-content; }
+
+/* Safety reset：キャッシュに古い !important が残っても無効化 */
+#hero .hero-copy{ transform:none !important; left:0 !important; right:0 !important; }
+
+@media (max-width: 600px){
+  #contact .privacy-consent{ padding-left: 0; }  /* 右寄せを解除して左に合わせる */
+}
+

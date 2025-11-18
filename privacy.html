@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!-- プライバシーポリシー専用ページ。
+問い合わせフォーム利用者がアクセスする想定。
+グローバルナビには含めず、index.htmlのフォーム内リンクからのみ遷移。-->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>個人情報の取扱いについて | チーズアカデミーTOKYO</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
+<!-- ▼ 追加：privacy専用の間隔オーバーライド -->
+  <!-- ▼ privacyページ専用の余白オーバーライド -->
+<style>
+  /* セクション間の外側余白を詰める */
+  .privacy-main section.privacy-section {
+    margin-block: 16px;     /* 20→16px等 好みで */
+    padding: 16px 16px;     /* ← ここで 60px の内側余白を詰める */
+  }
+
+  /* 見出し・本文の上下ダブりを防ぐ（任意） */
+  .privacy-main h1 { margin-block: 12px; }
+  .privacy-main h2 { margin-block: 10px 8px; }
+  .privacy-main p  { margin-block: 6px; }
+
+  /* 一番上/下だけ少し詰める（任意） */
+  .privacy-main > section:first-of-type { margin-top: 8px; }
+  .privacy-main > section:last-of-type  { margin-bottom: 8px; }
+</style>
+
+</head>
+<body>
+  <!-- サイト統一感のためロゴのみ配置。共通ナビゲーションは不要だが、
+   ユーザーが自然にホームへ戻れる導線のみを残す。-->
+   
+   <header class="site-header site-header--simple" role="banner">
+  <div class="container header-container">
+    <h1 class="logo">
+      <a href="index.html"><img src="./img/header_logo.png" alt="チーズアカデミーTOKYO"></a>
+    </h1>
+    <a href="index.html" class="back-link" aria-label="メインページに戻る">← メインページに戻る</a>
+  </div>
+</header>
+
+
+  <main class="privacy-main">
+  <div class="container">
+    <h1>個人情報の取扱いについて</h1>
+
+    <section class="privacy-section">
+      <h2>1. 個人情報の利用目的</h2>
+      <p>本校は、お問い合わせフォームにて取得した個人情報を、ご質問・ご相談への回答およびご連絡の目的でのみ利用します。</p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>2. 個人情報の第三者提供</h2>
+      <p>取得した個人情報を、法令に基づく場合を除き、本人の同意なく第三者に提供することはありません。</p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>3. 個人情報の管理</h2>
+      <p>本校は、個人情報を適切に管理し、漏洩・改ざん・紛失等の防止に努めます。</p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>4. お問い合わせ窓口</h2>
+      <p>
+        個人情報に関するお問い合わせは、下記窓口までご連絡ください。<br>
+        チーズアカデミーTOKYO 事務局<br>
+        E-mail: <a href="mailto:dummy@cheeseacademy.tokyo">dummy@cheeseacademy.tokyo</a>
+      </p>
+    </section>
+  </div>
+</main>
+
+
+<!-- FOOTER：全ページ共通。コピーライト表記のみ配置。 -->
+<!-- copyright” は 概念名詞（不可算名詞）なので複数形にはしない -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <small>Copyright 2016 Cheeese Academy Tokyo All RIghts Reserved.</small>
+  </div>
+</footer>
+
+</body>
+</html>

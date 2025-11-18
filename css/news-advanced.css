@@ -1,0 +1,67 @@
+/* ===== NEWS 追加機能（news.html 専用） ===== */
+
+/* 全件グリッド（可変カラム） */
+:root { --news-gap:24px; --news-min:260px; }
+#wallboard{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(var(--news-min),1fr));
+  gap:var(--news-gap);
+  margin:24px 0 48px;
+  padding:0;
+  list-style:none;
+}
+#wallboard > li{ list-style:none; margin:0; padding:0; }
+
+/* カード（decorが付けるクラスにも互換） */
+.news-card{
+  display:block; height:100%;
+  background:#fff; color:#222; text-decoration:none;
+  border-radius:16px; overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+.news-card .thumb{ aspect-ratio:16/9; overflow:hidden; }
+.news-card .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+.news-card .body, figcaption.meta{ background:#fff; padding:12px 14px 16px; display:block; }
+.news-card time, .date{ display:block; margin:0 0 6px; font-size:12px; line-height:1.2; color:#666; }
+.news-card .title{ margin:0; font-size:16px; line-height:1.4; font-weight:700; color:#222; }
+.news-card .subtitle{ margin:0; font-size:14px; line-height:1.6; color:#333; }
+
+/* TOC（丸チップ） */
+#news-toc{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 16px; }
+#news-toc .chip{
+  display:inline-block; padding:6px 10px; border:1px solid #e5e5e5; border-radius:9999px;
+  background:#fff; color:#333; font-size:14px; line-height:1; text-decoration:none;
+  transition: box-shadow .2s ease, background .2s ease;
+}
+#news-toc .chip:hover{ background:#f8f8f8; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+
+/* 互換セレクタ（wall__linkに対しても必ず当たる） */
+a.wall__link.news-card figcaption.meta{ display:block; padding:12px 14px 16px; }
+a.wall__link.news-card .title{ font-size:16px; font-weight:700; line-height:1.35; margin:0 0 4px; color:#222; }
+a.wall__link.news-card .date{ font-size:12px; opacity:.7; display:block; margin:0 0 6px; }
+a.wall__link.news-card .subtitle{ font-size:14px; line-height:1.6; color:#333; }
+
+/* TOC互換（旧 .toc マークアップにも当たるように） */
+#news-toc .chip,
+#news-toc a,
+.toc a{
+  display:inline-block;
+  padding:6px 10px;
+  border:1px solid #e5e5e5;
+  border-radius:9999px;
+  background:#fff;
+  color:#333;
+  font-size:14px;
+  line-height:1;
+  text-decoration:none;
+  transition: box-shadow .2s ease, background .2s ease;
+}
+#news-toc .chip:hover,
+#news-toc a:hover,
+.toc a:hover{
+  background:#f8f8f8;
+  box-shadow:0 1px 2px rgba(0,0,0,.06);
+}
+/* レイアウト用ラッパ互換 */
+#news-toc,
+.toc .wrap{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 16px; }
